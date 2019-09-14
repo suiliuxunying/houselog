@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shao.house.houselog.mapper.CommendMapper" >
+  <resultMap id="BaseResultMap" type="com.shao.house.houselog.model.Commend" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="hid" property="hid" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, uid, hid, level
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from commend
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--getCommendList-->
+  <select id="getCommendList" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from commend
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+
+<!--deleteAll-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from commend
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteAll" >
+    delete from commend
+    where level > 0
+  </delete>
+  <insert id="insert" parameterType="com.shao.house.houselog.model.Commend" >
+    insert into commend (id, uid, hid, 
+      level)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{hid,jdbcType=INTEGER}, 
+      #{level,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shao.house.houselog.model.Commend" >
+    insert into commend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="hid != null" >
+        hid,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="hid != null" >
+        #{hid,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shao.house.houselog.model.Commend" >
+    update commend
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="hid != null" >
+        hid = #{hid,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shao.house.houselog.model.Commend" >
+    update commend
+    set uid = #{uid,jdbcType=INTEGER},
+      hid = #{hid,jdbcType=INTEGER},
+      level = #{level,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>
